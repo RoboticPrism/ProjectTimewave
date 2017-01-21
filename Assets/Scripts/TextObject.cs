@@ -25,31 +25,20 @@ public class TextObject : MonoBehaviour {
         }   
 	}
 
-    public void SetUp(GameObject parent, Vector3 offset, int fontSize)
+    // Types out the text at the speed specified
+    public void CreateText(GameObject parent, Vector3 offest, string newText, typeSpeed textSpeed, int fontSize)
     {
         this.parent = parent;
-        this.offset = offset;
-        this.fontSize = fontSize;
-    }
-
-    // Types out the text at the speed specified
-    public void WriteText(string newText, typeSpeed textSpeed, int secondsUntilDelete)
-    {
         text = this.GetComponentInChildren<Text>();
+        text.fontSize = fontSize;
         if (textSpeed == typeSpeed.INSTANT)
         {
             text.text = newText;
         }
-        StartCoroutine(WaitToDeleteEnum(secondsUntilDelete));
     }
 
-    protected IEnumerator WaitToDeleteEnum(int secondsUntilDelete)
+    public void DeleteText()
     {
-        while (true)
-        {
-            yield return new WaitForSeconds(secondsUntilDelete);
-            Debug.Log("delete text");
-            Destroy(this.gameObject);
-        }
+        Destroy(this.gameObject);
     }
 }
