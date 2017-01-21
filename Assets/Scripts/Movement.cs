@@ -23,11 +23,11 @@ public class Movement : MonoBehaviour {
 		up_idle = Resources.Load<Sprite> ("Sprites/jerry_back_idle");
 		up_movement = Resources.Load<Sprite> ("Sprites/jerry_back_walk");
 		down_idle = Resources.Load<Sprite> ("Sprites/jerry_front_idle");
-		down_movement = Resources.Load<Sprite> ("Sprites/jerry_font_walk");
+		down_movement = Resources.Load<Sprite> ("Sprites/jerry_front_walk");
 		left_idle = Resources.Load<Sprite> ("Sprites/jerry_left_idle");
-		left_movement = Resources.Load<Sprite> ("Sprites/jerry_left_movement");
+		left_movement = Resources.Load<Sprite> ("Sprites/jerry_left_walk");
 		right_idle = Resources.Load<Sprite> ("Sprites/jerry_right_idle");
-		right_movement = Resources.Load<Sprite> ("Sprites/jerry_right_movement");
+		right_movement = Resources.Load<Sprite> ("Sprites/jerry_right_walk");
 
 		// Set default direction
 		sp.sprite = up_idle;
@@ -36,6 +36,8 @@ public class Movement : MonoBehaviour {
 	void FixedUpdate() {
 		float moveHorizontal;
 		float moveVertical;
+		string direction;
+		string motion;
 
 		moveHorizontal = Input.GetAxis("Horizontal");
 		moveVertical = Input.GetAxis("Vertical");
@@ -43,25 +45,49 @@ public class Movement : MonoBehaviour {
 		if (rb2d.velocity.sqrMagnitude <= maxVelocity) {
 			rb2d.AddForce (new Vector2 (moveHorizontal, moveVertical) * speed);
 		}
+
+		/*if (Input.GetKeyDown ("up")) {
+			sp.sprite = up_idle;
+		}*/
 		if (Input.GetKey ("up")) {
-			sp.sprite = up_movement;
-		}
-		if (Input.GetKey ("down")) {
-			sp.sprite = down_movement;
-		}
-		if (Input.GetKey ("left")) {
-			sp.sprite = left_movement;
-		}
-		if (Input.GetKey ("right")) {
-			sp.sprite = right_movement;
+			direction = "up";
 		}
 		/*if (Input.GetKeyUp ("up")) {
-			print ("Up Key Released");
-			rb2d.AddForce (new Vector2(1.0f, rb2d.velocity.x));
+			sp.sprite = up_idle;
+		}
+		if (Input.GetKeyDown ("down")) {
+			sp.sprite = down_idle;
 		}*/
+		else if (Input.GetKey ("down")) {
+			direction = "down";
+		}
 		/*if (Input.GetKeyUp ("down")) {
-			print ("Down Key Released");
-			rb2d.AddForce(
+			sp.sprite = down_idle;
+		}
+		if (Input.GetKeyDown ("left")) {
+			sp.sprite = left_idle;
 		}*/
+		else if (Input.GetKey ("left")) {
+			direction = "left";
+		}
+		/*if (Input.GetKeyUp ("left")) {
+			sp.sprite = left_idle;
+		}
+		if (Input.GetKeyDown ("right")) {
+			sp.sprite = right_idle;
+		}*/
+		else if (Input.GetKey ("right")) {
+			direction = "right";
+		}
+		/*if (Input.GetKeyUp ("right")) {
+			sp.sprite = right_idle;
+		}*/
+		if (rb2d.velocity.magnitude > 0.2) {
+			motion = "walk";
+		} else {
+			motion = "idle";
+		}
+
+		sp.sprite = "jerry_" + direction + "_" + motion;
 	}
 }
