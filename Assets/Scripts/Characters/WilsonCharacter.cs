@@ -4,24 +4,10 @@ using UnityEngine;
 
 public class WilsonCharacter : Character {
 
-    
 	// Use this for initialization
 	void Start () {
-
+        actions.Add(new MoveToLocation(new Vector3(2, 0, 0), 2));
+        actions.Add(new MoveToLocation(new Vector3(0, 0, 0), 3));
+        actions.Add(new MoveToLocation(new Vector3(0, 2, 0), 5));
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
-    public override void DoActions(int current_seconds)
-    {
-        if (current_seconds == 2)
-        {
-            MoveToLocation(new Vector3(2, 0, 0));
-        }
-    }
-    
-
 }
