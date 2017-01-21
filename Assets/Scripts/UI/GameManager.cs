@@ -43,11 +43,11 @@ public class GameManager : MonoBehaviour {
         }
         if (Input.GetKeyUp(KeyCode.B))
         {
-            List<GameObject> buttons = new List<GameObject>();
-            buttons.Add(ButtonFactory.createButton("Test 1", test1));
-            buttons.Add(ButtonFactory.createButton("This is a longer Test 2", test2));
             if (actionDialogue == null)
             {
+                List<GameObject> buttons = new List<GameObject>();
+                buttons.Add(ButtonFactory.createButton("Test 1", test1));
+                buttons.Add(ButtonFactory.createButton("This is a longer Test 2", test2));
                 actionDialogue = ActionDialogueFactory.createActionDialogue("Here are all the buttons!\n\nPick One!", buttons);
             }
             else
@@ -62,11 +62,13 @@ public class GameManager : MonoBehaviour {
     {
         Debug.Log("Test 1 button pressed!");
         ActionDialogueFactory.destroyActionDialogue();
+        actionDialogue = null;
     }
 
     private void test2()
     {
         Debug.Log("Test 2 button pressed!");
         ActionDialogueFactory.destroyActionDialogue();
+        actionDialogue = null;
     }
 }
