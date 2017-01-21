@@ -60,9 +60,16 @@ public class Character : MonoBehaviour {
         //TODO
     }
 
+    // Delete the user's future actions and add new ones
+    public void ChangeFuture(List<Action> newActions)
+    {
+        actions = newActions;
+    }
+
     // Kill the character and end their future events
     public void Kill()
     {
+        Debug.Log("DEAD");
         alive = false;
         actions = new List<Action>(); // Delete the list, dead people can't do stuff
     }
