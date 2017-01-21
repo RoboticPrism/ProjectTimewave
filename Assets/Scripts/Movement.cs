@@ -35,16 +35,16 @@ public class Movement : MonoBehaviour {
 		if (rb2d.velocity.sqrMagnitude <= maxVelocity) {
 			rb2d.AddForce (new Vector2 (moveHorizontal, moveVertical) * speed);
 		}
-		if (Input.GetKeyDown ("up")) {
+		if (Input.GetKey ("up")) {
 			sp.sprite = up;
 		}
-		if (Input.GetKeyDown ("down")) {
+		if (Input.GetKey ("down")) {
 			sp.sprite = down;
 		}
-		if (Input.GetKeyDown ("left")) {
+		if (Input.GetKey ("left")) {
 			sp.sprite = left;
 		}
-		if (Input.GetKeyDown ("right")) {
+		if (Input.GetKey ("right")) {
 			sp.sprite = right;
 		}
 		/*if (Input.GetKeyUp ("up")) {
