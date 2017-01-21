@@ -6,12 +6,14 @@ using UnityEngine;
 public class Character : MonoBehaviour {
 
     public float moveSpeed = .01f;
-    private bool alive = true;
+    protected bool alive = true;
+    public TextObject textPrefab;
+    protected GameObject textManager;
     public List<Action> actions = new List<Action>();
 
 	// Use this for initialization
-	void Start () {
-        
+	protected virtual void Start () {
+        textManager = (FindObjectOfType(typeof(TextManager)) as TextManager).gameObject;
     }
 	
 	// Update is called once per frame
@@ -55,9 +57,12 @@ public class Character : MonoBehaviour {
     }
 
     // Makes the character say something
-    public void WriteText(string characterText)
+    public void WriteText(string characterText, TextObject.typeSpeed textSpeed, int secondsUntilDelete)
     {
-        //TODO
+        TextObject textObject = GameObject.Instantiate(textPrefab);
+        textObject.transform.SetParent(textManager.transform);
+        textObject.SetUp(this.gameObject, new Vector3(0, 1, 0), 20);
+        textObject.WriteText(characterText, textSpeed, secondsUntilDelete);
     }
 
     // Delete the user's future actions and add new ones
@@ -106,18 +111,22 @@ public class MoveToLocation : Action
 public class WriteText : Action
 {
     public string characterText;
+    public TextObject.typeSpeed textSpeed;
+    public int secondsUntilDelete;
     public int activateOn;
 
-    public WriteText(string characterText, int activateOn)
+    public WriteText(string characterText, TextObject.typeSpeed textSpeed, int secondsUntilDelete, int activateOn)
     {
         this.characterText = characterText;
+        this.textSpeed = textSpeed;
+        this.secondsUntilDelete = secondsUntilDelete;
         this.activateOn = activateOn;
     }
 
     public override void DoAction(Character character, int current_time)
     {
         if (current_time == activateOn) { 
-            character.WriteText(characterText);
+            character.WriteText(characterText, textSpeed, secondsUntilDelete);
         }
     }
 }
