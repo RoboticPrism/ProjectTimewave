@@ -8,21 +8,29 @@ public class Movement : MonoBehaviour {
 
 	private Rigidbody2D rb2d;
 	private SpriteRenderer sp;
-	private Sprite up;
-	private Sprite down;
-	private Sprite left;
-	private Sprite right;
+	private Sprite up_idle;
+	private Sprite up_movement;
+	private Sprite down_idle;
+	private Sprite down_movement;
+	private Sprite left_idle;
+	private Sprite left_movement;
+	private Sprite right_idle;
+	private Sprite right_movement;
 
 	void Start() {
 		rb2d = GetComponent<Rigidbody2D> ();
 		sp = gameObject.GetComponent<SpriteRenderer> ();
-		up = Resources.Load<Sprite> ("Sprites/jerry_back_idle");
-		down = Resources.Load<Sprite> ("Sprites/jerry_front_idle");
-		left = Resources.Load<Sprite> ("Sprites/jerry_left_idle");
-		right = Resources.Load<Sprite> ("Sprites/jerry_right_idle");
+		up_idle = Resources.Load<Sprite> ("Sprites/jerry_back_idle");
+		up_movement = Resources.Load<Sprite> ("Sprites/jerry_back_walk");
+		down_idle = Resources.Load<Sprite> ("Sprites/jerry_front_idle");
+		down_movement = Resources.Load<Sprite> ("Sprites/jerry_font_walk");
+		left_idle = Resources.Load<Sprite> ("Sprites/jerry_left_idle");
+		left_movement = Resources.Load<Sprite> ("Sprites/jerry_left_movement");
+		right_idle = Resources.Load<Sprite> ("Sprites/jerry_right_idle");
+		right_movement = Resources.Load<Sprite> ("Sprites/jerry_right_movement");
 
 		// Set default direction
-		sp.sprite = up;
+		sp.sprite = up_idle;
 	}
 
 	void FixedUpdate() {
@@ -36,16 +44,16 @@ public class Movement : MonoBehaviour {
 			rb2d.AddForce (new Vector2 (moveHorizontal, moveVertical) * speed);
 		}
 		if (Input.GetKey ("up")) {
-			sp.sprite = up;
+			sp.sprite = up_movement;
 		}
 		if (Input.GetKey ("down")) {
-			sp.sprite = down;
+			sp.sprite = down_movement;
 		}
 		if (Input.GetKey ("left")) {
-			sp.sprite = left;
+			sp.sprite = left_movement;
 		}
 		if (Input.GetKey ("right")) {
-			sp.sprite = right;
+			sp.sprite = right_movement;
 		}
 		/*if (Input.GetKeyUp ("up")) {
 			print ("Up Key Released");
