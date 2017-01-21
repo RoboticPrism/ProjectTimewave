@@ -4,14 +4,19 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Character : MonoBehaviour {
+    public TimedAction timedActionPrefab;
+    public MoveAction moveActionPrefab;
+    public TextAction textActionPrefab;
 
     public float moveSpeed = .01f;
-    private bool alive = true;
-    public List<Action> actions = new List<Action>();
+    protected bool alive = true;
+    protected GameObject textManager;
+    public Timeline timeline;
+    public List<BaseAction> currentActions = new List<BaseAction>();
 
 	// Use this for initialization
-	void Start () {
-        
+	protected virtual void Start () {
+        textManager = (FindObjectOfType(typeof(TextManager)) as TextManager).gameObject;
     }
 	
 	// Update is called once per frame
@@ -29,96 +34,38 @@ public class Character : MonoBehaviour {
     }
 
     // Searchs player actions and runs actions if its time
-    public virtual void DoActions(int current_seconds)
+    public void DoActions(int current_seconds)
     {
-        foreach (Action action in actions)
+        foreach (TimedAction action in timeline.GetTimeline())
         {
-            action.DoAction(this, current_seconds);
+            action.DoTimedAction(current_seconds);
         }
     }
 
-    // Moves the character to the given location
-    public void MoveToLocation(Vector3 targetLocation)
+    // Cancels all actions that are currently running
+    public void StopAllActions()
     {
-        StartCoroutine(MoveToLocationEnum(this.gameObject, targetLocation));
-    }
-
-    protected IEnumerator MoveToLocationEnum(GameObject character, Vector3 targetLocation)
-    {
-        while (Vector3.Distance(this.transform.position, targetLocation) > 0.01f)
+        foreach (BaseAction action in currentActions)
         {
-            character.transform.position = Vector3.MoveTowards(character.transform.position, targetLocation, moveSpeed);
-            yield return null;
+            action.StopAction();
         }
-        this.transform.position = targetLocation;
-        yield return null;
-    }
-
-    // Makes the character say something
-    public void WriteText(string characterText)
-    {
-        //TODO
     }
 
     // Delete the user's future actions and add new ones
-    public void ChangeFuture(List<Action> newActions)
+    public void ChangeFuture(Timeline newTimeline)
     {
-        actions = newActions;
+        Debug.Log("changing future");
+        timeline.DeleteTimeline();
+        timeline = newTimeline;
     }
 
     // Kill the character and end their future events
-    public void Kill()
+    public void Kill(BaseAction deathAction)
     {
         Debug.Log("DEAD");
         alive = false;
-        actions = new List<Action>(); // Delete the list, dead people can't do stuff
-    }
-}
-
-// Base class for actions
-public abstract class Action
-{
-    public abstract void DoAction(Character character, int current_time);
-} 
-
-// Move to location action
-public class MoveToLocation : Action
-{
-    public Vector3 targetLocation;
-    public int activateOn;
-
-    public MoveToLocation(Vector3 targetLocation, int activateOn)
-    {
-        this.targetLocation = targetLocation;
-        this.activateOn = activateOn;
-    }
-
-    public override void DoAction(Character character, int current_time)
-    {
-        if (current_time == activateOn)
-        {
-            character.MoveToLocation(targetLocation);
-        }
-    }
-}
-
-// Write text action
-public class WriteText : Action
-{
-    public string characterText;
-    public int activateOn;
-
-    public WriteText(string characterText, int activateOn)
-    {
-        this.characterText = characterText;
-        this.activateOn = activateOn;
-    }
-
-    public override void DoAction(Character character, int current_time)
-    {
-        if (current_time == activateOn) { 
-            character.WriteText(characterText);
-        }
+        currentActions = new List<BaseAction>();
+        deathAction.DoAction();
     }
 }
 
