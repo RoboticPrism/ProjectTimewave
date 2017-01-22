@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ManholeCover : InteractibleObject {
 
+    IEnumerator moveIntoPlace;
+
 	// Use this for initialization
 	void Start () {
 		
@@ -16,7 +18,11 @@ public class ManholeCover : InteractibleObject {
 
     public override void Interact()
     {
-        StartCoroutine(MoveIntoPlace());
+        if (moveIntoPlace == null)
+        {
+            moveIntoPlace = MoveIntoPlace();
+            StartCoroutine(moveIntoPlace);
+        }
     }
 
     IEnumerator MoveIntoPlace()

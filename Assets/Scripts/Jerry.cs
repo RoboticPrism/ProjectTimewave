@@ -9,6 +9,7 @@ public class Jerry : MonoBehaviour {
     public bool alive = true;
     Movement movementScript;
     Animator anim;
+    IEnumerator currentCoroutine;
 
 	// Use this for initialization
 	void Start () {
@@ -42,13 +43,21 @@ public class Jerry : MonoBehaviour {
         {
             if (coll.gameObject.GetComponent<RoadRubbish>())
             {
-                StartCoroutine(WriteText(new Vector3(0, 1, 0), "This looks like it could easily make a car spin out. Lets get rid of this...", TextObject.typeSpeed.INSTANT, 20, 5));
-                coll.gameObject.GetComponent<RoadRubbish>().Interact();
+                if (currentCoroutine == null)
+                {
+                    currentCoroutine = WriteText(new Vector3(0, 1, 0), "This looks like it could easily make a car spin out. Lets get rid of this...", TextObject.typeSpeed.INSTANT, 20, 5);
+                    StartCoroutine(currentCoroutine);
+                    coll.gameObject.GetComponent<RoadRubbish>().Interact();
+                }
             }
             if (coll.gameObject.GetComponent<ManholeCover>())
             {
-                StartCoroutine(WriteText(new Vector3(0, 1, 0), "This open manhole looks really dangerous, lets cover this up...", TextObject.typeSpeed.INSTANT, 20, 5));
-                coll.gameObject.GetComponent<ManholeCover>().Interact();
+                if (currentCoroutine == null)
+                {
+                    currentCoroutine = WriteText(new Vector3(0, 1, 0), "This open manhole looks really dangerous, lets cover this up...", TextObject.typeSpeed.INSTANT, 20, 5);
+                    StartCoroutine(currentCoroutine);
+                    coll.gameObject.GetComponent<ManholeCover>().Interact();
+                }
             }
             
         }
@@ -65,6 +74,7 @@ public class Jerry : MonoBehaviour {
         textObject.CreateText(this.gameObject, offset, text, textSpeed, textSize);
         yield return new WaitForSeconds(lifetime);
         textObject.DeleteText();
+        currentCoroutine = null;
     }
 
     void Kill()
