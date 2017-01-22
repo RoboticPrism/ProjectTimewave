@@ -19,11 +19,12 @@ public class Character : MonoBehaviour {
 	// Use this for initialization
 	protected virtual void Start () {
         textManager = (FindObjectOfType(typeof(TextManager)) as TextManager).gameObject;
+		timeline.SetUpTimeline(this);
     }
 	
 	// Update is called once per frame
 	void Update () {
-		
+
 	}
 
     // Listens for updates from the time controller

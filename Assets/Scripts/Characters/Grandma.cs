@@ -5,5 +5,8 @@ using UnityEngine;
 
 public class Grandma : Character {
 
+	void Start() {
+		base.Start();
+	}
 }
 
