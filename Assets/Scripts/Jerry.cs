@@ -25,6 +25,19 @@ public class Jerry : MonoBehaviour {
             Kill();
             Debug.Log("jerry died");
         }
+
+    }
+
+    void OnTriggerStay2D(Collider2D coll)
+    {
+        if (Input.GetAxis("Interact") > 0)
+        {
+            if (coll.gameObject.GetComponent<RoadRubbish>())
+            {
+                Debug.Log("boop");
+                coll.gameObject.GetComponent<RoadRubbish>().Interact();
+            }
+        }
     }
 
     void Kill()

@@ -29,7 +29,7 @@ public class TimedAction : MonoBehaviour {
 
     public void DoTimedAction(int current_time)
     {
-        if (current_time == activateOn)
+        if (current_time == activateOn || activateOn == -1)
         {
             action.DoAction();
         }
