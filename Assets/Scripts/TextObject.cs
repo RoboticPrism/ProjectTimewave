@@ -35,10 +35,35 @@ public class TextObject : MonoBehaviour {
         {
             text.text = newText;
         }
+        else if (textSpeed == typeSpeed.QUICK)
+        {
+            StartCoroutine(WriteTextQuickly(text, newText));
+        } else if (textSpeed == typeSpeed.SLOW)
+        {
+            StartCoroutine(WriteTextSlowly(text, newText));
+        }
     }
 
-    public void DeleteText()
-    {
-        Destroy(this.gameObject);
+	IEnumerator WriteText(Text text, string newText, float delay) {
+		string currentText = "";
+		string modifiedNewText = newText;
+		foreach (char c in newText) {
+			currentText += c;
+			yield return new WaitForSeconds(delay);
+			text.text = currentText;
+		}
+		yield return null;
+	}
+
+    IEnumerator WriteTextQuickly(Text text, string newText) {
+		return WriteText (text, newText, 0.0f);
+    }
+
+    IEnumerator WriteTextSlowly(Text text, string newText) {
+		return WriteText (text, newText, 0.1f);
+    }
+
+    public void DeleteText() {    
+         Destroy(this.gameObject);
     }
 }

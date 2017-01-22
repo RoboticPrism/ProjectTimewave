@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
     private GameObject actionDialogue;
     public GameObject actionDialoguePrefab;
     public GameObject buttonPrefab;
+    public GameObject wilfredStateIcon;
     public Canvas uiCanvas;
 
 	// Use this for initialization
@@ -55,6 +57,15 @@ public class GameManager : MonoBehaviour {
                 ActionDialogueFactory.destroyActionDialogue();
                 actionDialogue = null;
             }
+        }
+        /*if(Input.GetKeyUp(KeyCode.K))
+        {
+            Debug.Log("K key pressed!");
+            wilfredStateIcon.GetComponent<WilfredIcon>().killWilfredIcon();
+        }*/
+        if(Input.GetKeyUp(KeyCode.R))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
 

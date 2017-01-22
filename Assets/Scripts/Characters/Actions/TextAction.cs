@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class TextAction : BaseAction {
-
+    
     public TextObject textObjectPrefab;
     public TextObject textObject;
 
@@ -41,6 +41,7 @@ public class TextAction : BaseAction {
 
     public override void StopAction()
     {
+        Destroy(this.textObject);
         Destroy(this.gameObject);
     }
 
