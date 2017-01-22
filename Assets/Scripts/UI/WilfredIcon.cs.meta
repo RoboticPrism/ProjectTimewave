@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+<<<<<<< HEAD
+<<<<<<< HEAD
+guid: fa28f2a59fed23b4bad33a18b1498c19
+timeCreated: 1485053487
+=======
+guid: d9152c8042b3b604a8f23e6893665121
+timeCreated: 1485056149
+>>>>>>> c4faa3071ed759209acf00cfa46d07d215d526a1
+=======
+guid: d9152c8042b3b604a8f23e6893665121
+timeCreated: 1485056149
+>>>>>>> f68ea59baa71bf2171d4b7a225c7bf5a54b62148
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
