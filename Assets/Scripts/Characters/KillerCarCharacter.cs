@@ -14,7 +14,8 @@ public class KillerCarCharacter : Character {
 
     void OnTriggerEnter2D(Collider2D coll)
     {
-        if (coll.gameObject.GetComponent<RoadRubbish>())
+        InteractibleObject interact = coll.gameObject.GetComponent<InteractibleObject>();
+        if (interact != null)
         {
             Debug.Log("Collision!");
             ChangeFuture(crashTimeline);

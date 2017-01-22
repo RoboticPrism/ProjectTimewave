@@ -1,8 +1,10 @@
-﻿using System.Collections;
+﻿using Assets.Scripts.Characters;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
-public class WilsonCharacter : Character {
+public class WilsonCharacter : Character, BagelReceiver {
 
     Animator anim;
     Rigidbody2D rgbd;
@@ -58,17 +60,43 @@ public class WilsonCharacter : Character {
     {
         if (coll.gameObject.GetComponent<KillerCarCharacter>())
         {
-            anim.SetBool("Dead", true);
-            Kill(Instantiate(textActionPrefab).SetUp(this, new Vector3(0, 1, 0), "BLRGRGgggg....", TextObject.typeSpeed.INSTANT, 40, 3));
-            wilfredStateIcon.GetComponent<WilfredIcon>().killWilfredIcon();
-        }
-        if (coll.gameObject.GetComponent<Manhole>())
+            killWilfred("BLRGRGgggg....", 40);
+        } else if (coll.gameObject.GetComponent<Manhole>())
         {
-            anim.SetBool("Dead", true);
+            killWilfred("AAAAaaaaaaa.......      Sploosh", 20);
+            //wilfred dissapears, so remove his sprite
             Destroy(this.GetComponent<SpriteRenderer>());
-            Kill(Instantiate(textActionPrefab).SetUp(this, new Vector3(0, 1, 0), "AAAAaaaaaaa.......      Sploosh", TextObject.typeSpeed.INSTANT, 20, 3));
-            wilfredStateIcon.GetComponent<WilfredIcon>().killWilfredIcon();
         }
     }
 
+    void OnTriggerStay2D(Collider2D coll)
+    {
+        if(doInteraction)
+        {
+            InteractibleObject interactable = coll.gameObject.GetComponent<InteractibleObject>();
+            if (interactable != null)
+            {
+                interactable.Interact(this);
+            }
+            doInteraction = false;
+        }
+    }
+
+    private void killWilfred(string text, int textSize)
+    {
+        anim.SetBool("Dead", true);
+        Kill(Instantiate(textActionPrefab).SetUp(this, new Vector3(0, 1, 0), text, TextObject.typeSpeed.INSTANT, textSize, 3));
+        wilfredStateIcon.GetComponent<WilfredIcon>().killWilfredIcon();
+    }
+
+    public void receiveBagel(bool bagelReceived)
+    {
+        if(bagelReceived)
+        {
+            killWilfred("*Cough*... *Cough*... I'm choking.... *Cough*", 20);
+        } else
+        {
+            Instantiate(textActionPrefab).SetUp(this, new Vector3(0, 1, 0), "Aww... No more bagels.", TextObject.typeSpeed.INSTANT, 20, 3).DoAction();
+        }
+    }
 }

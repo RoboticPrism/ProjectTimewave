@@ -1,8 +1,10 @@
-﻿using System.Collections;
+﻿using Assets.Scripts.Characters;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ManholeCover : InteractibleObject {
+public class ManholeCover : MonoBehaviour, InteractibleObject
+{
 
     IEnumerator moveIntoPlace;
 
@@ -16,7 +18,7 @@ public class ManholeCover : InteractibleObject {
 		
 	}
 
-    public override void Interact()
+    public void Interact(Actor actor)
     {
         if (moveIntoPlace == null)
         {

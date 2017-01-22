@@ -1,8 +1,10 @@
-﻿using System.Collections;
+﻿using Assets.Scripts.Characters;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RoadRubbish : InteractibleObject {
+public class RoadRubbish : MonoBehaviour, InteractibleObject
+{
 
 	// Use this for initialization
 	void Start () {
@@ -14,7 +16,7 @@ public class RoadRubbish : InteractibleObject {
 		
 	}
 
-    public override void Interact()
+    public void Interact(Actor actor)
     {
         Destroy(this.gameObject);
     }
