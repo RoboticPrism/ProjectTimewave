@@ -1,14 +1,17 @@
-﻿using System.Collections;
+﻿using Assets.Scripts.Characters;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
-public class Jerry : MonoBehaviour {
+public class Jerry : MonoBehaviour, BagelReceiver {
 
     public TextObject textObjectPrefab;
     public TextObject textObject;
     public bool alive = true;
     Movement movementScript;
     Animator anim;
+    IEnumerator currentCoroutine;
 
 	// Use this for initialization
 	void Start () {
@@ -42,15 +45,28 @@ public class Jerry : MonoBehaviour {
         {
             if (coll.gameObject.GetComponent<RoadRubbish>())
             {
-                StartCoroutine(WriteText(new Vector3(0, 1, 0), "This looks like it could easily make a car spin out. Lets get rid of this...", TextObject.typeSpeed.INSTANT, 20, 5));
-                coll.gameObject.GetComponent<RoadRubbish>().Interact();
-            }
-            if (coll.gameObject.GetComponent<ManholeCover>())
+                if (currentCoroutine == null)
+                {
+                    currentCoroutine = WriteText(new Vector3(0, 1, 0), "This looks like it could easily make a car spin out. Lets get rid of this...", TextObject.typeSpeed.INSTANT, 20, 5);
+                    StartCoroutine(currentCoroutine);
+                    coll.gameObject.GetComponent<RoadRubbish>().Interact(null);
+                }
+            } else if (coll.gameObject.GetComponent<ManholeCover>())
             {
-                StartCoroutine(WriteText(new Vector3(0, 1, 0), "This open manhole looks really dangerous, lets cover this up...", TextObject.typeSpeed.INSTANT, 20, 5));
-                coll.gameObject.GetComponent<ManholeCover>().Interact();
+                if (currentCoroutine == null)
+                {
+                    currentCoroutine = WriteText(new Vector3(0, 1, 0), "This open manhole looks really dangerous, lets cover this up...", TextObject.typeSpeed.INSTANT, 20, 5);
+                    StartCoroutine(currentCoroutine);
+                    coll.gameObject.GetComponent<ManholeCover>().Interact(null);
+                }
+            } else if (coll.gameObject.GetComponent<InteractibleObject>() != null)
+            {
+                if (currentCoroutine == null)
+                {
+                    coll.gameObject.GetComponent<InteractibleObject>().Interact(this);
+                }
             }
-            
+
         }
     }
 
@@ -65,10 +81,23 @@ public class Jerry : MonoBehaviour {
         textObject.CreateText(this.gameObject, offset, text, textSpeed, textSize);
         yield return new WaitForSeconds(lifetime);
         textObject.DeleteText();
+        currentCoroutine = null;
     }
 
     void Kill()
     {
         movementScript.Kill();
+    }
+
+    public void receiveBagel(bool bagelReceived)
+    {
+        if (bagelReceived)
+        {
+            currentCoroutine = WriteText(new Vector3(0, 1, 0), "Bagels are delicious! I'll take one!", TextObject.typeSpeed.INSTANT, 20, 5);
+        } else
+        {
+            currentCoroutine = WriteText(new Vector3(0, 1, 0), "Aw... Looks like they are out of bagels", TextObject.typeSpeed.INSTANT, 20, 5);
+        }
+        StartCoroutine(currentCoroutine);
     }
 }

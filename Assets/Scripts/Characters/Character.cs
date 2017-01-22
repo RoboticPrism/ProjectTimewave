@@ -14,6 +14,8 @@ public class Character : MonoBehaviour {
     public Timeline timeline;
     public List<BaseAction> currentActions = new List<BaseAction>();
 
+    public bool doInteraction { get; set; }
+
 	// Use this for initialization
 	protected virtual void Start () {
         textManager = (FindObjectOfType(typeof(TextManager)) as TextManager).gameObject;

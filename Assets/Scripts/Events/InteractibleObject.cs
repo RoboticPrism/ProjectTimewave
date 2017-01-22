@@ -1,21 +1,9 @@
-﻿using System.Collections;
+﻿using Assets.Scripts.Characters;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InteractibleObject : MonoBehaviour {
+public interface InteractibleObject {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
-    public virtual void Interact()
-    {
-
-    } 
+    void Interact(Actor actor); 
 }

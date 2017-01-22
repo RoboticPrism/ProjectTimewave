@@ -41,6 +41,7 @@ public class TextAction : BaseAction {
 
     public override void StopAction()
     {
+        Destroy(this.textObject);
         Destroy(this.gameObject);
     }
 
