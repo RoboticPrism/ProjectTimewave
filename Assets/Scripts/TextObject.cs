@@ -44,49 +44,26 @@ public class TextObject : MonoBehaviour {
         }
     }
 
-    IEnumerator WriteTextQuickly(Text text, string newText)
-    {
-        string currentText = "";
-        string modifiedNewText = newText;
-        while (newText.Length > 0)
-        {
-            currentText = currentText + modifiedNewText.Substring(0, 1);
-            if (modifiedNewText.Length > 1)
-            {
-                modifiedNewText = modifiedNewText.Substring(1, modifiedNewText.Length - 1);
-            } else
-            {
-                modifiedNewText = "";
-            }
-            yield return null;
-            text.text = currentText;
-        }
-        yield return null;
+	IEnumerator WriteText(Text text, string newText, float delay) {
+		string currentText = "";
+		string modifiedNewText = newText;
+		foreach (char c in newText) {
+			currentText += c;
+			yield return new WaitForSeconds(delay);
+			text.text = currentText;
+		}
+		yield return null;
+	}
+
+    IEnumerator WriteTextQuickly(Text text, string newText) {
+		return WriteText (text, newText, 0.0f);
     }
 
-    IEnumerator WriteTextSlowly(Text text, string newText)
-    {
-        string currentText = "";
-        string modifiedNewText = newText;
-        while (newText.Length > 0)
-        {
-            currentText = currentText + modifiedNewText.Substring(0, 1);
-            if (modifiedNewText.Length > 1)
-            {
-                modifiedNewText = modifiedNewText.Substring(1, modifiedNewText.Length - 1);
-            }
-            else
-            {
-                modifiedNewText = "";
-            }
-            yield return new WaitForSeconds(0.1f);
-            text.text = currentText;
-        }
-        yield return null;
+    IEnumerator WriteTextSlowly(Text text, string newText) {
+		return WriteText (text, newText, 0.1f);
     }
 
-    public void DeleteText()
-    {    
+    public void DeleteText() {    
          Destroy(this.gameObject);
     }
 }
