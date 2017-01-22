@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 7204f14acb98dd04097f9e412f3acfae
+timeCreated: 1485028893
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - timedActionPrefab: {fileID: 114638477312084514, guid: 8415a51a44e82cc4b9602b35b1fab921,
+      type: 2}
+  - moveActionPrefab: {fileID: 114488423558446964, guid: 3350542a0dd8cef4a9e41a39664f91a3,
+      type: 2}
+  - textActionPrefab: {fileID: 114467525217269706, guid: 55663adb7fd608c44a12f9fd021d405e,
+      type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
