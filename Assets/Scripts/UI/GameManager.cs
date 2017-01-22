@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
     private GameObject actionDialogue;
     public GameObject actionDialoguePrefab;
     public GameObject buttonPrefab;
+    public GameObject wilfredStateIcon;
     public Canvas uiCanvas;
 
 	// Use this for initialization
@@ -43,11 +45,11 @@ public class GameManager : MonoBehaviour {
         }
         if (Input.GetKeyUp(KeyCode.B))
         {
-            List<GameObject> buttons = new List<GameObject>();
-            buttons.Add(ButtonFactory.createButton("Test 1", test1));
-            buttons.Add(ButtonFactory.createButton("This is a longer Test 2", test2));
             if (actionDialogue == null)
             {
+                List<GameObject> buttons = new List<GameObject>();
+                buttons.Add(ButtonFactory.createButton("Test 1", test1));
+                buttons.Add(ButtonFactory.createButton("This is a longer Test 2", test2));
                 actionDialogue = ActionDialogueFactory.createActionDialogue("Here are all the buttons!\n\nPick One!", buttons);
             }
             else
@@ -56,17 +58,28 @@ public class GameManager : MonoBehaviour {
                 actionDialogue = null;
             }
         }
+        if(Input.GetKeyUp(KeyCode.K))
+        {
+            Debug.Log("K key pressed!");
+            wilfredStateIcon.GetComponent<WilfredIcon>().killWilfredIcon();
+        }
+        if(Input.GetKeyUp(KeyCode.R))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
     }
 
     private void test1()
     {
         Debug.Log("Test 1 button pressed!");
         ActionDialogueFactory.destroyActionDialogue();
+        actionDialogue = null;
     }
 
     private void test2()
     {
         Debug.Log("Test 2 button pressed!");
         ActionDialogueFactory.destroyActionDialogue();
+        actionDialogue = null;
     }
 }
