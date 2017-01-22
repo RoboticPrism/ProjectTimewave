@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Assets.Scripts;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Character : MonoBehaviour {
+public class Character : MonoBehaviour, TimeReceiver{
     public TimedAction timedActionPrefab;
     public MoveAction moveActionPrefab;
     public TextAction textActionPrefab;
@@ -19,21 +20,13 @@ public class Character : MonoBehaviour {
 	// Use this for initialization
 	protected virtual void Start () {
         textManager = (FindObjectOfType(typeof(TextManager)) as TextManager).gameObject;
+        TimeManager.getInstance().addTimeReceiver(this);
     }
 	
 	// Update is called once per frame
 	void Update () {
 		
 	}
-
-    // Listens for updates from the time controller
-    public void ReceiveCurrentTime(int current_seconds)
-    {
-        if (alive)
-        {
-            DoActions(current_seconds);
-        }
-    }
 
     // Searchs player actions and runs actions if its time
     public void DoActions(int current_seconds)
@@ -67,6 +60,14 @@ public class Character : MonoBehaviour {
         StopAllActions();
         currentActions = new List<BaseAction>();
         deathAction.DoAction();
+    }
+
+    public void receiveTime(float timeReceived)
+    {
+        if (alive)
+        {
+            DoActions((int)timeReceived);
+        }
     }
 }
 

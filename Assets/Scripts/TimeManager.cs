@@ -11,6 +11,25 @@ public class TimeManager : MonoBehaviour {
     private int tickrate = 1;
     private List<TimeReceiver> timeReceivers;
 
+    private static TimeManager instance;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Debug.Log("Attempting to create more than one TimeManager!!!");
+        }
+    }
+
+    public static TimeManager getInstance()
+    {
+        return instance;
+    }
+
     // Use this for initialization
     void Start () {
         startTime = Time.time;
@@ -26,7 +45,7 @@ public class TimeManager : MonoBehaviour {
     void BroadcastCurrentTime()
     {
         float currentTime = GetCurrentTime();
-        BroadcastMessage("ReceiveCurrentTime", currentTime);
+        //BroadcastMessage("ReceiveCurrentTime", currentTime);
         foreach (TimeReceiver receiver in timeReceivers)
         {
             receiver.receiveTime(currentTime);
