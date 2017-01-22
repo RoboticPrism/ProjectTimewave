@@ -9,8 +9,10 @@ public class WilsonCharacter : Character {
     int direction = 0;
     Vector3 lastLocation;
 
-	// Use this for initialization
-	void Start () {
+    public GameObject wilfredStateIcon;
+
+    // Use this for initialization
+    void Start () {
         base.Start();
         timeline.SetUpTimeline(this);
         anim = GetComponent<Animator>();
@@ -58,6 +60,7 @@ public class WilsonCharacter : Character {
         {
             anim.SetBool("Dead", true);
             Kill(Instantiate(textActionPrefab).SetUp(this, new Vector3(0, 1, 0), "BLRGRGgggg....", TextObject.typeSpeed.INSTANT, 40, 3));
+            wilfredStateIcon.GetComponent<WilfredIcon>().killWilfredIcon();
         }
     }
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class TextAction : BaseAction {
-
+    
     public TextObject textObjectPrefab;
     public TextObject textObject;
 

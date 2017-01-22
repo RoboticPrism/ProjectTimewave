@@ -58,11 +58,11 @@ public class GameManager : MonoBehaviour {
                 actionDialogue = null;
             }
         }
-        if(Input.GetKeyUp(KeyCode.K))
+        /*if(Input.GetKeyUp(KeyCode.K))
         {
             Debug.Log("K key pressed!");
             wilfredStateIcon.GetComponent<WilfredIcon>().killWilfredIcon();
-        }
+        }*/
         if(Input.GetKeyUp(KeyCode.R))
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
