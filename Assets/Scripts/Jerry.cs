@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Jerry : MonoBehaviour {
 
+    public TextAction textActionPrefab;
     public bool alive = true;
     Movement movementScript;
     Animator anim;
@@ -23,7 +24,28 @@ public class Jerry : MonoBehaviour {
         if (coll.gameObject.GetComponent<KillerCarCharacter>())
         {
             Kill();
-            Debug.Log("jerry died");
+        }
+        if (coll.gameObject.GetComponent<Manhole>())
+        {
+            Kill();
+            Destroy(this.GetComponent<SpriteRenderer>());
+        }
+
+    }
+
+    void OnTriggerStay2D(Collider2D coll)
+    {
+        if (Input.GetAxis("Interact") > 0)
+        {
+            if (coll.gameObject.GetComponent<RoadRubbish>())
+            {
+                coll.gameObject.GetComponent<RoadRubbish>().Interact();
+            }
+            if (coll.gameObject.GetComponent<ManholeCover>())
+            {
+                coll.gameObject.GetComponent<ManholeCover>().Interact();
+            }
+            
         }
     }
 

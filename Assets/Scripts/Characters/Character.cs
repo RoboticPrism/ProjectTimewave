@@ -54,6 +54,7 @@ public class Character : MonoBehaviour {
         Debug.Log("changing future");
         timeline.DeleteTimeline();
         timeline = newTimeline;
+        timeline.SetUpTimeline(this);
     }
 
     // Kill the character and end their future events
