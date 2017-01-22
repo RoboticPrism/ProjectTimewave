@@ -14,7 +14,15 @@ public class ClockAnimator : MonoBehaviour {
 
      void Update()
     {
-        DateTime time = DateTime.Now;
-        seconds.localRotation = Quaternion.Euler(0f, 0f, time.Second * -secondsToDegrees);
+        // DateTime time = DateTime.Now;
+        float time = 0;
+        seconds.localRotation = Quaternion.Euler(0f, 0f, time);
+
+        if(time == 60)
+        {
+            EndOftheWorld eow = new EndOftheWorld();
+            eow.runAnimation();
+        }
+
     }
 }
