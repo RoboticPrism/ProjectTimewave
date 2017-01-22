@@ -6,6 +6,7 @@ public class MoveAction : BaseAction {
 
     public Vector3 targetLocation;
     public float moveSpeed;
+    private IEnumerator coroutine;
 
 	// Use this for initialization
 	void Start () {
@@ -28,11 +29,15 @@ public class MoveAction : BaseAction {
     public override void DoAction()
     {
         this.moveSpeed = character.moveSpeed;
-        StartCoroutine(MoveToLocationEnum(character.gameObject, targetLocation));
+        coroutine = MoveToLocationEnum(character.gameObject, targetLocation);
+        StartCoroutine(coroutine);
     }
 
     public override void StopAction()
     {
+        if (coroutine != null) {
+            StopCoroutine(coroutine);
+        }
         Destroy(this.gameObject);
     }
 
