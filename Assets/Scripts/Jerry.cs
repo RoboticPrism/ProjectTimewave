@@ -20,7 +20,10 @@ public class Jerry : MonoBehaviour, BagelReceiver {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if (Input.GetAxis("Restart") > 0)
+        {
+            Application.LoadLevel(2);
+        }
 	}
 
     void OnTriggerEnter2D(Collider2D coll)

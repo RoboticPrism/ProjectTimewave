@@ -31,6 +31,18 @@ public class TimeManager : MonoBehaviour {
         {
             receiver.receiveTime(currentTime);
         }
+        if ((int)currentTime == 95)
+        {
+            bool success = false;
+            if (success)
+            {
+                Application.LoadLevel(1);
+            }
+            else
+            {
+                Application.LoadLevel(2);
+            }
+        }
     }
 
     public void addTimeReceiver(TimeReceiver receiver)
