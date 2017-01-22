@@ -117,7 +117,7 @@ public class Jerry : MonoBehaviour, BagelReceiver {
     public IEnumerator resetWorld()
     {
         yield return new WaitForSeconds(3);
-        Application.LoadLevel(0);
+        Application.LoadLevel(3);
     }
 
     public void receiveBagel(bool bagelReceived)
