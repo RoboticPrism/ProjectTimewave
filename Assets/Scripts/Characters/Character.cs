@@ -45,10 +45,7 @@ public class Character : MonoBehaviour {
     // Cancels all actions that are currently running
     public void StopAllActions()
     {
-        foreach (BaseAction action in currentActions)
-        {
-            action.StopAction();
-        }
+        timeline.DeleteTimeline();
     }
 
     // Delete the user's future actions and add new ones
@@ -64,6 +61,7 @@ public class Character : MonoBehaviour {
     {
         Debug.Log("DEAD");
         alive = false;
+        StopAllActions();
         currentActions = new List<BaseAction>();
         deathAction.DoAction();
     }

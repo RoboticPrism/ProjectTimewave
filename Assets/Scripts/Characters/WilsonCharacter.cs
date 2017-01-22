@@ -16,6 +16,7 @@ public class WilsonCharacter : Character {
         anim = GetComponent<Animator>();
         rgbd = GetComponent<Rigidbody2D>();
         lastLocation = this.transform.position;
+        anim.SetBool("Dead", false);
     }
 
     void FixedUpdate()
@@ -25,24 +26,27 @@ public class WilsonCharacter : Character {
         float angle = Mathf.Atan2(velocity.y, velocity.x) * Mathf.Rad2Deg;
         if (speed > 0)
         {
+            // Forward
             if (angle >= 215f && angle <= 325f)
             {
                 direction = 0;
             }
+            // Left
             else if (angle > 135f && angle < 215f)
             {
                 direction = 1;
             }
+            // Down
             else if (angle >= 45f && angle <= 135f)
             {
                 direction = 2;
             }
+            // Right
             else if (angle < 45f || angle > 325f)
             {
                 direction = 3;
             }
         }
-        Debug.Log(speed);
         anim.SetFloat("Speed", speed);
         anim.SetInteger("Direction", direction);
         lastLocation = this.transform.position;
@@ -52,7 +56,9 @@ public class WilsonCharacter : Character {
     {
         if (coll.gameObject.GetComponent<KillerCarCharacter>())
         {
+            anim.SetBool("Dead", true);
             Kill(Instantiate(textActionPrefab).SetUp(this, new Vector3(0, 1, 0), "BLRGRGgggg....", TextObject.typeSpeed.INSTANT, 40, 3));
         }
     }
+
 }
