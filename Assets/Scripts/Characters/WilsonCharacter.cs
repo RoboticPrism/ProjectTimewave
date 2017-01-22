@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class WilsonCharacter : Character, BagelReceiver {
+public class WilsonCharacter : Character, BagelReceiver, LabWorker {
 
     Animator anim;
     Rigidbody2D rgbd;
@@ -56,8 +56,9 @@ public class WilsonCharacter : Character, BagelReceiver {
         lastLocation = this.transform.position;
     }
 
-    void OnTriggerEnter2D(Collider2D coll)
+    public override void OnTriggerEnter2D(Collider2D coll)
     {
+        base.OnTriggerEnter2D(coll);
         if (coll.gameObject.GetComponent<KillerCarCharacter>())
         {
             killWilfred("BLRGRGgggg....", 40);
@@ -66,19 +67,6 @@ public class WilsonCharacter : Character, BagelReceiver {
             killWilfred("AAAAaaaaaaa.......      Sploosh", 20);
             //wilfred dissapears, so remove his sprite
             Destroy(this.GetComponent<SpriteRenderer>());
-        }
-    }
-
-    void OnTriggerStay2D(Collider2D coll)
-    {
-        if(doInteraction)
-        {
-            InteractibleObject interactable = coll.gameObject.GetComponent<InteractibleObject>();
-            if (interactable != null)
-            {
-                interactable.Interact(this);
-            }
-            doInteraction = false;
         }
     }
 
@@ -98,5 +86,12 @@ public class WilsonCharacter : Character, BagelReceiver {
         {
             Instantiate(textActionPrefab).SetUp(this, new Vector3(0, 1, 0), "Aww... No more bagels.", TextObject.typeSpeed.INSTANT, 20, 3).DoAction();
         }
+    }
+
+    public void enterLab()
+    {
+        Destroy(this.GetComponent<SpriteRenderer>());
+        TimeManager.getInstance().setSuccess(true);
+
     }
 }

@@ -13,6 +13,8 @@ public class TimeManager : MonoBehaviour {
 
     private static TimeManager instance;
 
+    private bool success;
+
     private void Awake()
     {
         if (instance == null)
@@ -23,6 +25,7 @@ public class TimeManager : MonoBehaviour {
         {
             Debug.Log("Attempting to create more than one TimeManager!!!");
         }
+        if (timeReceivers == null) timeReceivers = new List<TimeReceiver>();
     }
 
     public static TimeManager getInstance()
@@ -32,9 +35,9 @@ public class TimeManager : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        success = false;
         startTime = Time.time;
         InvokeRepeating("BroadcastCurrentTime", 0.0f, 1.0f);
-        if (timeReceivers == null) timeReceivers = new List<TimeReceiver>();
     }
 	
 	// Update is called once per frame
@@ -52,7 +55,6 @@ public class TimeManager : MonoBehaviour {
         }
         if ((int)currentTime == 95)
         {
-            bool success = false;
             if (success)
             {
                 Application.LoadLevel(2);
@@ -66,13 +68,11 @@ public class TimeManager : MonoBehaviour {
 
     public void addTimeReceiver(TimeReceiver receiver)
     {
-        if (timeReceivers == null) timeReceivers = new List<TimeReceiver>();
         this.timeReceivers.Add(receiver);
     }
 
     public void removeTimeReceiver(TimeReceiver receiver)
     {
-        if (timeReceivers == null) timeReceivers = new List<TimeReceiver>();
         this.timeReceivers.Remove(receiver);
     }
 
@@ -89,6 +89,11 @@ public class TimeManager : MonoBehaviour {
     public void RestartTime()
     {
         startTime = Time.time;
+    }
+
+    public void setSuccess(bool success)
+    {
+        this.success = success;
     }
 
 }

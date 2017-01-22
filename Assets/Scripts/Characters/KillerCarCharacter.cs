@@ -12,9 +12,11 @@ public class KillerCarCharacter : Character {
         timeline.SetUpTimeline(this);
     }
 
-    void OnTriggerEnter2D(Collider2D coll)
+    public override void OnTriggerEnter2D(Collider2D coll)
     {
-        InteractibleObject interact = coll.gameObject.GetComponent<InteractibleObject>();
+        base.OnTriggerEnter2D(coll);
+        RoadRubbish interact = coll.gameObject.GetComponent<RoadRubbish>();
+        this.triggers.Remove(coll);
         if (interact != null)
         {
             Debug.Log("Collision!");

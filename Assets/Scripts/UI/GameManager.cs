@@ -22,16 +22,16 @@ public class GameManager : MonoBehaviour {
 	void Update () {
         if (Input.GetKeyUp(KeyCode.Space))
         {
-            if (actionDialogue == null)
+            /*if (actionDialogue == null)
             {
                 actionDialogue = ActionDialogueFactory.createActionDialogue("This is a test action dialogue!\n\nHow cool!", null);
             } else
             {
                 ActionDialogueFactory.destroyActionDialogue();
                 actionDialogue = null;
-            }
+            }*/
         }
-        if (Input.GetKeyUp(KeyCode.A))
+        /*if (Input.GetKeyUp(KeyCode.A))
         {
             if (actionDialogue == null)
             {
@@ -42,8 +42,8 @@ public class GameManager : MonoBehaviour {
                 ActionDialogueFactory.destroyActionDialogue();
                 actionDialogue = null;
             }
-        }
-        if (Input.GetKeyUp(KeyCode.B))
+        }*/
+        /*if (Input.GetKeyUp(KeyCode.B))
         {
             if (actionDialogue == null)
             {
@@ -57,13 +57,17 @@ public class GameManager : MonoBehaviour {
                 ActionDialogueFactory.destroyActionDialogue();
                 actionDialogue = null;
             }
+        }*/
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            Application.Quit();
         }
         /*if(Input.GetKeyUp(KeyCode.K))
         {
             Debug.Log("K key pressed!");
             wilfredStateIcon.GetComponent<WilfredIcon>().killWilfredIcon();
         }*/
-        if(Input.GetKeyUp(KeyCode.R))
+        if (Input.GetKeyUp(KeyCode.R))
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }

@@ -9,7 +9,7 @@ namespace Assets.Scripts.Characters.Actions
     {
         public override void DoAction()
         {
-            character.doInteraction = true;
+            character.doInteraction();
         }
 
         public override void StopAction()
