@@ -18,7 +18,7 @@ public class RestartWorldScript : MonoBehaviour {
         if (!movie.isPlaying || Input.GetAxis("Interact") > 0)
         {
             Debug.Log("movie end");
-            Application.LoadLevel(0);
+            Application.LoadLevel(1);
         }
     }
 }

@@ -22,7 +22,7 @@ public class Jerry : MonoBehaviour, BagelReceiver {
 	void Update () {
 		if (Input.GetAxis("Restart") > 0)
         {
-            Application.LoadLevel(2);
+            Application.LoadLevel(0);
         }
 	}
 

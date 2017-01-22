@@ -36,11 +36,11 @@ public class TimeManager : MonoBehaviour {
             bool success = false;
             if (success)
             {
-                Application.LoadLevel(1);
+                Application.LoadLevel(2);
             }
             else
             {
-                Application.LoadLevel(2);
+                Application.LoadLevel(0);
             }
         }
     }
