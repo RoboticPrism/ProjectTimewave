@@ -21,13 +21,14 @@ public class Character : MonoBehaviour, TimeReceiver, Actor {
 	// Use this for initialization
 	protected virtual void Start () {
         textManager = (FindObjectOfType(typeof(TextManager)) as TextManager).gameObject;
+		timeline.SetUpTimeline(this);
         TimeManager.getInstance().addTimeReceiver(this);
         triggers = new List<Collider2D>();
     }
 	
 	// Update is called once per frame
 	void Update () {
-		
+
 	}
 
     public virtual void OnTriggerEnter2D(Collider2D coll)
