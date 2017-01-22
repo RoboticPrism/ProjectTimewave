@@ -28,6 +28,7 @@ public class ClockAnimator : MonoBehaviour, TimeReceiver
     void TimeReceiver.receiveTime(float timeReceived)
     {
         //Debug.Log("Received Time " + timeReceived);
-        seconds.localRotation = Quaternion.Euler(0f, 0f, (timeReceived * -secondsToDegrees) % 360);
+        float degrees = (timeReceived / -95.0f) * 360.0f + 90;
+        seconds.localRotation = Quaternion.Euler(0f, 0f, degrees);
     }
 }
