@@ -62,6 +62,13 @@ public class WilsonCharacter : Character {
             Kill(Instantiate(textActionPrefab).SetUp(this, new Vector3(0, 1, 0), "BLRGRGgggg....", TextObject.typeSpeed.INSTANT, 40, 3));
             wilfredStateIcon.GetComponent<WilfredIcon>().killWilfredIcon();
         }
+        if (coll.gameObject.GetComponent<Manhole>())
+        {
+            anim.SetBool("Dead", true);
+            Destroy(this.GetComponent<SpriteRenderer>());
+            Kill(Instantiate(textActionPrefab).SetUp(this, new Vector3(0, 1, 0), "AAAAaaaaaaa.......      Sploosh", TextObject.typeSpeed.INSTANT, 20, 3));
+            wilfredStateIcon.GetComponent<WilfredIcon>().killWilfredIcon();
+        }
     }
 
 }
