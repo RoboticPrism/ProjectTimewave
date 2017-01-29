@@ -10,7 +10,7 @@ public class Character : MonoBehaviour, TimeReceiver, Actor {
     public MoveAction moveActionPrefab;
     public TextAction textActionPrefab;
 
-    public float moveSpeed = .01f;
+    public float moveSpeed;
     protected bool alive = true;
     protected GameObject textManager;
     public Timeline timeline;
@@ -18,12 +18,17 @@ public class Character : MonoBehaviour, TimeReceiver, Actor {
 
     protected List<Collider2D> triggers;
 
+
+    protected virtual void Awake()
+    {
+        triggers = new List<Collider2D>();
+    }
+
 	// Use this for initialization
-	protected virtual void Start () {
+	public virtual void Start () {
         textManager = (FindObjectOfType(typeof(TextManager)) as TextManager).gameObject;
 		timeline.SetUpTimeline(this);
         TimeManager.getInstance().addTimeReceiver(this);
-        triggers = new List<Collider2D>();
     }
 	
 	// Update is called once per frame
@@ -39,15 +44,6 @@ public class Character : MonoBehaviour, TimeReceiver, Actor {
     public virtual void OnTriggerExit2D(Collider2D coll)
     {
         triggers.Remove(coll);
-    }
-
-    // Searchs player actions and runs actions if its time
-    public void DoActions(int current_seconds)
-    {
-        foreach (TimedAction action in timeline.GetTimeline())
-        {
-            action.DoTimedAction(current_seconds);
-        }
     }
 
     // Cancels all actions that are currently running
@@ -79,7 +75,7 @@ public class Character : MonoBehaviour, TimeReceiver, Actor {
     {
         if (alive)
         {
-            DoActions((int)timeReceived);
+            timeline.DoTimedActions((int)timeReceived);
         }
     }
 

@@ -64,9 +64,8 @@ public class TrafficManager : MonoBehaviour, TimeReceiver {
         if (lastLane == lane) lane = (lane + 1) % lanes.Count;
         bool truck = UnityEngine.Random.Range(0, 2) == 1;
         GameObject car = (GameObject)Instantiate(truck ? GenericTruckPrefab : GenericCarPrefab, new Vector2(1.735f + 27.695f * directions[lane]*-1f, lanes[lane]), Quaternion.identity);
-        TimedAction timedAction = car.transform.GetComponentInChildren<TimedAction>();
-        timedAction.activateOn = (int)timeReceived + 1;
         MoveAction moveAction = car.transform.GetComponentInChildren<MoveAction>();
+        moveAction.ActivateOn = -1;
         moveAction.targetLocation = new Vector2(50f * directions[lane], lanes[lane]);
         if (directions[lane] < 0)
         {

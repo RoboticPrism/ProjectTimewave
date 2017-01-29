@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Assets.Scripts.Characters.Actions
-{
     public class InteractAction : BaseAction
     {
+
         public override void DoAction()
         {
-            character.doInteraction();
+            Character.doInteraction();
         }
 
         public override void StopAction()
@@ -17,4 +16,3 @@ namespace Assets.Scripts.Characters.Actions
             Destroy(this.gameObject);
         }
     }
-}

@@ -1,54 +1,49 @@
-﻿using System.Collections;
+﻿using Assets.Scripts;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class MoveAction : BaseAction {
 
     public Vector3 targetLocation;
-    public float moveSpeed;
-    private IEnumerator coroutine;
+    private float moveSpeedPerSecond;
+    private bool moving;
+    private float distance;
 
 	// Use this for initialization
 	void Start () {
-		
+        moving = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+        moveTowardsTarget();		
 	}
-
-    public MoveAction SetUp(Character character, Vector3 targetLocation, float moveSpeed)
-    {
-        this.character = character;
-        this.targetLocation = targetLocation;
-        this.moveSpeed = moveSpeed;
-        return this;
-    }
 
     public override void DoAction()
     {
-        this.moveSpeed = character.moveSpeed;
-        coroutine = MoveToLocationEnum(character.gameObject, targetLocation);
-        StartCoroutine(coroutine);
+        this.moveSpeedPerSecond = Character.moveSpeed;
+        this.moving = true;
+        distance = Vector3.Distance(Character.transform.position, targetLocation);
     }
 
     public override void StopAction()
     {
-        if (coroutine != null) {
-            StopCoroutine(coroutine);
-        }
+        moving = false;
         Destroy(this.gameObject);
     }
 
-    protected IEnumerator MoveToLocationEnum(GameObject character, Vector3 targetLocation)
+    public void moveTowardsTarget()
     {
-        while (Vector3.Distance(character.transform.position, targetLocation) > 0.01f)
+        if(moving)
         {
-            character.transform.position = Vector3.MoveTowards(character.transform.position, targetLocation, moveSpeed);
-            yield return null;
+            float moveDistance = Time.deltaTime * moveSpeedPerSecond;
+            Character.transform.position = Vector3.MoveTowards(Character.transform.position, targetLocation, moveDistance);
+            if (Character.transform.position.Equals(targetLocation))
+            {
+                moving = false;
+            }
         }
-        character.transform.position = targetLocation;
-        yield return null;
     }
 }

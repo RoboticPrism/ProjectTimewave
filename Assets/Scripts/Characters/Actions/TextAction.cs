@@ -25,7 +25,7 @@ public class TextAction : BaseAction {
 
     public TextAction SetUp(Character character, Vector3 offest, string text, TextObject.typeSpeed textSpeed, int textSize, int lifetime)
     {
-        this.character = character;
+        this.Character = character;
         this.offest = offest;
         this.text = text;
         this.textSpeed = textSpeed;
@@ -36,7 +36,7 @@ public class TextAction : BaseAction {
 
     public override void DoAction()
     {
-        StartCoroutine(WriteText(character, offest, text, textSpeed, textSize, lifetime));
+        StartCoroutine(WriteText(Character, offest, text, textSpeed, textSize, lifetime));
     }
 
     public override void StopAction()

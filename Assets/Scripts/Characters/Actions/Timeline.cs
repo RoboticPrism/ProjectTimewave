@@ -4,17 +4,31 @@ using UnityEngine;
 
 public class Timeline : MonoBehaviour {
 
-    public List<TimedAction> timedActions;
+    private List<TimedAction> timedActions;
+    private List<BaseAction> timedActions2;
 
-	// Use this for initialization
-	void Start () {
+    private void Awake()
+    {
         timedActions = new List<TimedAction>();
+        timedActions2 = new List<BaseAction>();
+
         foreach (TimedAction action in this.GetComponentsInChildren<TimedAction>())
         {
             action.action = action.GetComponentInChildren<BaseAction>();
             timedActions.Add(action);
         }
-	}
+
+        foreach (BaseAction action in this.GetComponentsInChildren<BaseAction>())
+        {
+            timedActions2.Add(action);
+        }
+    }
+
+    // Use this for initialization
+    void Start () {
+        
+        
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -23,16 +37,10 @@ public class Timeline : MonoBehaviour {
 
     public void SetUpTimeline(Character character)
     {
-        foreach (TimedAction action in timedActions)
+        foreach (BaseAction action in timedActions2)
         {
-            action.character = character;
-            action.action.character = character;
+            action.SetCharacter(character);
         }
-    }
-
-    public List<TimedAction> GetTimeline()
-    {
-        return timedActions;
     }
 
     public void DeleteTimeline()
@@ -41,6 +49,21 @@ public class Timeline : MonoBehaviour {
         {
             action.StopTimedAction();
         }
+        foreach (BaseAction action in timedActions2)
+        {
+            action.StopAction();
+        }
         Destroy(this);
+    }
+
+    public void DoTimedActions(int current_seconds)
+    {
+        foreach (BaseAction action in timedActions2)
+        {
+            if (action.ActivateOn == current_seconds || action.ActivateOn == -1)
+            {
+                action.DoAction();
+            }
+        }
     }
 }

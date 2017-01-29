@@ -7,9 +7,8 @@ public class KillerCarCharacter : Character {
     public Timeline crashTimeline;
 
 	// Use this for initialization
-	void Start () {
+	override public void Start () {
         base.Start();
-        timeline.SetUpTimeline(this);
     }
 
     public override void OnTriggerEnter2D(Collider2D coll)
